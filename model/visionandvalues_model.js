@@ -9,6 +9,10 @@ const vision_value_schema = new mongoose.Schema({
         type: String,
         default: null
     },
+    main_description: {
+        type: String,
+        default: null
+    },
     subheading1: {
         type: String,
         default: null
@@ -29,14 +33,11 @@ const vision_value_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    content3: {
+    description1: {
         type: String,
         default: null
     },
-    description: {
-        type: String,
-        default: null
-    },
+    
     image1: {
         type: String,
         default: null
@@ -50,22 +51,6 @@ const vision_value_schema = new mongoose.Schema({
         default: null
     },
     image4: {
-        type: String,
-        default: null
-    },
-    breadcrumb_image: {
-        type: String,
-        default: null
-    },
-    icon1: {
-        type: String,
-        default: null
-    },
-    icon2: {
-        type: String,
-        default: null
-    },
-    icon3: {
         type: String,
         default: null
     },

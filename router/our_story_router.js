@@ -16,9 +16,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 router.post("/update_story", upload.fields([
-    { name: 'image1', maxCount: 1 },
-    { name: 'image2', maxCount: 1 },
-    { name: 'image3', maxCount: 1 },
+    { name: 'image', maxCount: 1 },
+    // { name: 'image2', maxCount: 1 },
+    // { name: 'image3', maxCount: 1 },
     { name: 'icon1', maxCount: 1 },
     { name: 'icon2', maxCount: 1 },
     { name: 'icon3', maxCount: 1 },

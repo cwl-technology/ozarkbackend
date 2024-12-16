@@ -30,7 +30,7 @@ const updateTeamMember = async (req, res) => {
         const currentData = await team_member_model.findOne({ _id: id });
         const image = req.file ? req.file.filename : currentData?.image;
 
-     
+
         if (!name || !designation || !image) {
             if (req.file) {
                 fs.unlinkSync(`./uploads/${req.file.filename}`);
@@ -111,11 +111,30 @@ const changeStatus = async (req, res) => {
     }
 }
 
+const getAllActiveTeamMember = async (req, res) => {
+    try {
+        const data = await team_member_model.find({ status: 1 });
+        if (!data) {
+            res.json({ message: "Unable to get team member", status: 0 });
+        }
+
+        const modifiedData = data?.map((ele) => {
+            ele.image = `${BASE_URL}/uploads/${ele.image}`
+            return ele;
+        })
+        res.json({ message: "Get team member data successfully", status: 1, data: modifiedData });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
 module.exports = {
     createTeamMember,
     updateTeamMember,
     deleteTeamMemeber,
     getTeamMemberData,
     getAllTeamMember,
-    changeStatus
+    changeStatus,
+    getAllActiveTeamMember
 }

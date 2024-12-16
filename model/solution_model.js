@@ -9,6 +9,10 @@ const solution_schema = new mongoose.Schema({
         type: String,
         default: null
     },
+    solution_image: {
+        type: String,
+        default: null
+    },
     heading: {
         type: String,
         default: null

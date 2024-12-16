@@ -1,5 +1,5 @@
 const express = require('express');
-const { createTestimonials, updateTestimonials, deleteTestimonials, getAllTestimonials, getTestimonial, changeStatus } = require('../controller/testimonial_controller');
+const { createTestimonials, updateTestimonials, deleteTestimonials, getAllTestimonials, getTestimonial, changeStatus, getAllActiveTestimonials } = require('../controller/testimonial_controller');
 const router = express();
 
 const multer = require("multer");
@@ -19,6 +19,7 @@ router.post("/update_testimonial", upload.single("image"), updateTestimonials);
 router.post("/delete_testimonial", deleteTestimonials);
 router.get("/get_all_testimonial", getAllTestimonials);
 router.post("/get_testimonial_data", getTestimonial);
+router.post("/get_active_testimonial_data",getAllActiveTestimonials);
 router.post("/change_status", changeStatus);
 
 

@@ -58,7 +58,7 @@ const updateBlog = async (req, res) => {
         const image3 = req.files ? req.files.image3 ? req.files.image3[0].filename : null : null
         const main_image = req.files ? req.files.main_image ? req.files.main_image[0].filename : null : null
 
-    
+
 
         const currentData = await blog_model.findOne({ slug: slug });
         if (!solution_id || !heading || !slug) {
@@ -202,11 +202,58 @@ const changeStatus = async (req, res) => {
 }
 
 
+// Blogs API for frontend
+
+const getBlogBySlug = async (req, res) => {
+    try {
+        const { slug } = req.body;
+        const data = blog_model.findOne({ status: 1, slug });
+        if (!data) {
+            res.json({ message: "Unable to get Blog data", status: 0 });
+        }
+
+        res.json({ message: "get bLog data", status: 1, data: data });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
+const getLatestBlog = async (req, res) => {
+    try {
+        const data = await blog_model.find({ status: 1 }).sort({ _id: -1 }).limit(3);
+        if (!data) {
+            res.json({ message: "Unable to get Blogs data", status: 0 });
+        }
+
+        res.json({ message: "get blogs data", status: 1, data: data });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+const getAllActiveBlogs = async (req, res) => {
+    try {
+        const data = await blog_model.find({ status: 1 });
+        if (!data) {
+            res.json({ message: "Unable to get Blogs data", status: 0 });
+        }
+
+        res.json({ message: "get blogs data", status: 1, data: data });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
 module.exports = {
     createBlog,
     updateBlog,
     deleteBlog,
     getAllBlogs,
     getBlogData,
-    changeStatus
+    changeStatus,
+    getBlogBySlug,
+    getAllActiveBlogs,
+    getLatestBlog
 };

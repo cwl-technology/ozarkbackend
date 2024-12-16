@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const { createSolution, updateSolution, deleteSolution, getAllSolutions, getSolutionData, changeStatus, getSolutionList } = require("../controller/solution_controller");
+const { createSolution, updateSolution, deleteSolution, getAllSolutions, getSolutionData, changeStatus, getSolutionList, getSolutionBySlug } = require("../controller/solution_controller");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -20,12 +20,14 @@ router.post("/create_solution", upload.fields([
     { name: 'image1', maxCount: 1 },
     { name: 'image2', maxCount: 1 },
     { name: 'icon1', maxCount: 1 },
+    { name: 'solution_image', maxCount: 1 },
     { name: 'icon2', maxCount: 1 },
 ]), createSolution);
 
 router.post("/update_solution", upload.fields([
     { name: 'image1', maxCount: 1 },
     { name: 'image2', maxCount: 1 },
+    { name: 'solution_image', maxCount: 1 },
     { name: 'icon1', maxCount: 1 },
     { name: 'icon2', maxCount: 1 },
 ]), updateSolution)
@@ -35,5 +37,6 @@ router.get("/get_all_solutions", getAllSolutions);
 router.post("/get_solution_data", getSolutionData);
 router.post("/change_status", changeStatus);
 router.get("/get_solution_list", getSolutionList);
+router.post("/get_solution_by_slug", getSolutionBySlug);
 
 module.exports = router;

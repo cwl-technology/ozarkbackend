@@ -19,10 +19,6 @@ router.post("/update_vision_and_values", upload.fields([
     { name: 'image2', maxCount: 1 },
     { name: 'image3', maxCount: 1 },
     { name: 'image4', maxCount: 1 },
-    { name: 'icon1', maxCount: 1 },
-    { name: 'icon2', maxCount: 1 },
-    { name: 'icon3', maxCount: 1 },
-    { name: 'breadcrumb_image', maxCount: 1 }
 ]), updateVisionAndValues);
 router.get("/get_vision_value", getVisionAndValueData);
 

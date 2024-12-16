@@ -1,4 +1,8 @@
 const home_model = require("../model/home_model");
+const solution_model = require("../model/solution_model");
+const testimonial_model = require("../model/testimonial_model");
+const blog_model = require("../model/blog_model");
+const banner_model = require("../model/banner_model");
 const fs = require("fs");
 const BASE_URL = process.env.BASE_URL;
 
@@ -96,7 +100,59 @@ const updateHomePageData = async (req, res) => {
     }
 }
 
+
+//Home page api
+const HomePageAPI = async (req, res) => {
+    try {
+        const data = await home_model.findOne({}).lean();
+        if (!data) {
+            return res.json({ message: "Unable to get home page data", status: 0 });
+        }
+
+        data.why_choose_us.image = `${BASE_URL}/uploads/${data.why_choose_us.image}`
+        data.our_expertise.icon1 = `${BASE_URL}/uploads/${data.our_expertise.icon1}`
+        data.our_expertise.icon2 = `${BASE_URL}/uploads/${data.our_expertise.icon2}`
+        data.our_expertise.icon3 = `${BASE_URL}/uploads/${data.our_expertise.icon3}`
+        data.our_expertise.icon4 = `${BASE_URL}/uploads/${data.our_expertise.icon4}`
+
+
+        let banner = await banner_model.find({});
+        banner = banner?.map((ele) => {
+            ele.image = `${BASE_URL}/uploads/${ele.image}`
+            return ele;
+        })
+        data.banner = banner;
+
+        let solution = await solution_model.find({ status: 1 });
+        solution = solution?.map((ele) => {
+            ele.solution_image = `${BASE_URL}/uploads/${ele.solution_image}`
+            return ele;
+        })
+        data.solution = solution;
+
+        let testimonial = await testimonial_model.find({ status: 1 }).sort({ _id: -1 }).limit(5);
+        testimonial = testimonial?.map((ele) => {
+            ele.image = `${BASE_URL}/uploads/${ele.image}`
+            return ele;
+        })
+        data.testimonial = testimonial;
+
+        let blogs = await blog_model.find({ status: 1 }).sort({ _id: -1 }).limit(3);
+        blogs = blogs?.map((ele) => {
+            ele.main_image = `${BASE_URL}/uploads/${ele.main_image}`
+            return ele;
+        })
+        data.blogs = blogs;
+
+        res.json({ message: "Get Home page data successfully", status: 1, data: data });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
 module.exports = {
     getHomePageData,
-    updateHomePageData
+    updateHomePageData,
+    HomePageAPI
 }

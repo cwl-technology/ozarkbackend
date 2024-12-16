@@ -122,11 +122,30 @@ const changeStatus = async (req, res) => {
     }
 }
 
+
+//Testimonials for STATUS = 1
+const getAllActiveTestimonials = async (req, res) => {
+    try {
+        const data = await testimonial_model.find({ status: 1 });
+        if (!data) {
+            return res.json({ "message": "Unable to get testimonial data", status: 0 });
+        }
+        const modifiedData = data?.map((ele) => {
+            ele.image = `${BASE_URL}/uploads/${ele.image}`
+            return ele
+        })
+        res.json({ message: "Get testimonial data successfully", status: 1, data: modifiedData });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
 module.exports = {
     createTestimonials,
     updateTestimonials,
     deleteTestimonials,
     getAllTestimonials,
     getTestimonial,
-    changeStatus
+    changeStatus,
+    getAllActiveTestimonials
 }

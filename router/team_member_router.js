@@ -1,5 +1,5 @@
 const express = require("express");
-const { createTeamMember, updateTeamMember, deleteTeamMemeber, getAllTeamMember, getTeamMemberData, changeStatus } = require("../controller/team_member_controller");
+const { createTeamMember, updateTeamMember, deleteTeamMemeber, getAllTeamMember, getTeamMemberData, changeStatus, getAllActiveTeamMember } = require("../controller/team_member_controller");
 const router = express.Router();
 
 const multer = require("multer");
@@ -20,5 +20,7 @@ router.post("/delete_team_member", deleteTeamMemeber);
 router.get("/get_all_team_member", getAllTeamMember);
 router.post("/get_team_member_data", getTeamMemberData);
 router.post("/change_status", changeStatus);
+router.get("/get_all_active_team_member", getAllActiveTeamMember);
+
 
 module.exports = router;

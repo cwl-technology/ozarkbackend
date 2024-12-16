@@ -49,14 +49,14 @@ const leadership_team_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    image1: {
-        type: String,
-        default: null
-    },
-    image2: {
-        type: String,
-        default: null
-    },
+    // image1: {
+    //     type: String,
+    //     default: null
+    // },
+    // image2: {
+    //     type: String,
+    //     default: null
+    // },
     title: {
         type: String,
         default: null

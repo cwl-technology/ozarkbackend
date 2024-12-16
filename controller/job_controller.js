@@ -93,6 +93,21 @@ const changeStatus = async (req, res) => {
 }
 
 
+const getAllActiveJobs = async (req, res) => {
+    try {
+        const data = await job_model.find({ status: 1 });
+        if (!data) {
+            return res.json({ message: "Unable to get job data", status: 0 });
+        }
+
+        res.json({ message: "Get Job successfully", status: 1, data: data });
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
+
 const postJobEnquiryData = async (req, res) => {
     try {
         const { name, email, subject, about } = req.body;
@@ -134,5 +149,6 @@ module.exports = {
     deleteJob,
     changeStatus,
     postJobEnquiryData,
-    getJobEnquiryData
+    getJobEnquiryData,
+    getAllActiveJobs
 }

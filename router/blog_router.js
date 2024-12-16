@@ -1,5 +1,5 @@
 const express = require("express");
-const { createBlog, updateBlog, getAllBlogs, getBlogData, deleteBlog, changeStatus } = require("../controller/blog_controller");
+const { createBlog, updateBlog, getAllBlogs, getBlogData, deleteBlog, changeStatus, getAllActiveBlogs, getBlogBySlug, getLatestBlog } = require("../controller/blog_controller");
 const router = express.Router();
 
 const multer = require("multer");
@@ -31,6 +31,9 @@ router.post("/delete_blog", deleteBlog);
 router.get("/get_all_blogs", getAllBlogs);
 router.post("/get_blog_data", getBlogData);
 router.post("/change_status", changeStatus);
+router.get("/get_all_active_blogs",getAllActiveBlogs);
+router.post("/get_blog_by_slug",getBlogBySlug);
+router.get("/get_latest_blogs",getLatestBlog);
 
 
 module.exports = router;

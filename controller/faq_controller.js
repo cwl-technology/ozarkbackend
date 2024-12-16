@@ -86,11 +86,25 @@ const changeStatus = async (req, res) => {
     }
 }
 
+const getActiveFaqData = async (req, res) => {
+    try {
+        const data = await faq_model.find({ status: 1 });
+        if (!data) {
+            return res.json({ message: "Unable to get FAQ data", status: 0 });
+        }
+        res.json({ message: "FAQ data deleted", status: 1, data: data });
+    } catch (err) {
+        console.log(err);
+        return res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
 module.exports = {
     createFAQ,
     updateFAQ,
     deleteFAQ,
     getAllFAQData,
     getFAQData,
-    changeStatus
+    changeStatus,
+    getActiveFaqData
 }

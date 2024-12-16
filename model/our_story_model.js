@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
 const ourstory_schema = new mongoose.Schema({
-    image1: {
+    image: {
         type: String,
         default: null
     },
-    image2: {
-        type: String,
-        default: null
-    },
-    image3: {
-        type: String,
-        default: null
-    },
+    // image2: {
+    //     type: String,
+    //     default: null
+    // },
+    // image3: {
+    //     type: String,
+    //     default: null
+    // },
     heading: {
         type: String,
         default: null

@@ -1,5 +1,5 @@
 const express = require("express");
-const { createJob, updateJob, deleteJob, getAllJobs, getJobData, changeStatus, postJobEnquiryData, getJobEnquiryData } = require("../controller/job_controller");
+const { createJob, updateJob, deleteJob, getAllJobs, getJobData, changeStatus, postJobEnquiryData, getJobEnquiryData, getAllActiveJobs } = require("../controller/job_controller");
 const router = express.Router();
 
 const multer = require("multer");
@@ -23,6 +23,7 @@ router.post("/get_job_data", getJobData);
 router.post("/change_status", changeStatus);
 router.post("/post_job_enquiry", upload.single("resume"), postJobEnquiryData);
 router.get("/get_job_enquiry_data", getJobEnquiryData);
+router.get("/get_all_active_job",getAllActiveJobs);
 
 
 module.exports = router;
