@@ -4,6 +4,8 @@ const testimonial_model = require("../model/testimonial_model");
 const blog_model = require("../model/blog_model");
 const banner_model = require("../model/banner_model");
 const fs = require("fs");
+const contact_model = require("../model/contact_model");
+const job_enquiry_model = require("../model/job_enquiry_model");
 const BASE_URL = process.env.BASE_URL;
 
 const getHomePageData = async (req, res) => {
@@ -116,7 +118,7 @@ const HomePageAPI = async (req, res) => {
         data.our_expertise.icon4 = `${BASE_URL}/uploads/${data.our_expertise.icon4}`
 
 
-        let banner = await banner_model.find({});
+        let banner = await banner_model.find({ status: 1 });
         banner = banner?.map((ele) => {
             ele.image = `${BASE_URL}/uploads/${ele.image}`
             return ele;
@@ -151,8 +153,25 @@ const HomePageAPI = async (req, res) => {
     }
 }
 
+const adminHomePageApi = async (req, res) => {
+    try {
+        const contactEnquiryData = await contact_model.countDocuments({});
+        const jobEnquiryData = await job_enquiry_model.countDocuments({});
+
+        res.json({
+            message: "Get Length data", status: 1, data: {
+                contactEnquiryData, jobEnquiryData
+            }
+        })
+    } catch (err) {
+        console.log(err);
+        res.json({ message: "Internal server error", status: 0 });
+    }
+}
+
 module.exports = {
     getHomePageData,
     updateHomePageData,
+    adminHomePageApi,
     HomePageAPI
 }

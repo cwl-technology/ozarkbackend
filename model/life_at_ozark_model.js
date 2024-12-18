@@ -9,10 +9,10 @@ const life_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    breadcrumb_image: {
-        type: String,
-        default: null
-    },
+    // breadcrumb_image: {
+    //     type: String,
+    //     default: null
+    // },
     image1: {
         type: String,
         default: null
@@ -61,6 +61,10 @@ const life_schema = new mongoose.Schema({
         type: String,
         default: null
     },
+    image13: {
+        type: String,
+        default: null
+    },
     subheading1: {
         type: String,
         default: null
@@ -73,10 +77,7 @@ const life_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    subheading4: {
-        type: String,
-        default: null
-    },
+  
     content1: {
         type: String,
         default: null
@@ -89,10 +90,7 @@ const life_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    content4: {
-        type: String,
-        default: null
-    },
+  
     title: {
         type: String,
         default: null

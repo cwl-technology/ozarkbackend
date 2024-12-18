@@ -47,13 +47,13 @@ const updateResponsibility = async (req, res) => {
             fs.unlinkSync(`./uploads/${data?.icon3}`)
         }
         if (req.files?.icon4 && data?.icon4) {
-            fs.unlinkSync(`./uploads/${data?.icon3}`)
+            fs.unlinkSync(`./uploads/${data?.icon4}`)
         }
         if (req.files?.icon5 && data?.icon5) {
-            fs.unlinkSync(`./uploads/${data?.icon3}`)
+            fs.unlinkSync(`./uploads/${data?.icon5}`)
         }
         if (req.files?.icon6 && data?.icon6) {
-            fs.unlinkSync(`./uploads/${data?.icon3}`)
+            fs.unlinkSync(`./uploads/${data?.icon6}`)
         }
         if (req.files?.image1 && data?.image1) {
             fs.unlinkSync(`./uploads/${data?.image1}`)

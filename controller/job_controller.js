@@ -110,14 +110,14 @@ const getAllActiveJobs = async (req, res) => {
 
 const postJobEnquiryData = async (req, res) => {
     try {
-        const { name, email, subject, about } = req.body;
+        const { name, email, phone, position, experience, notice_period } = req.body;
         const resume = req.file?.filename || null
 
-        if (!name || !email) {
+        if (!name || !email || !phone || !position) {
             return res.json({ message: "Please fill the requied fields", status: 0 });
         }
 
-        const data = new job_enquiry_model({ name, email, subject, about, resume });
+        const data = new job_enquiry_model({ name, email, phone, position, experience, notice_period, resume });
         await data.save();
         res.json({ message: "Enquiry received", status: 1 });
     } catch (err) {

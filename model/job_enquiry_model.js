@@ -9,7 +9,19 @@ const job_enquiry_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    subject: {
+    phone: {
+        type: Number,
+        default: null
+    },
+    position: {
+        type: String,
+        default: null
+    },
+    experience: {
+        type: String,
+        default: null
+    },
+    notice_period: {
         type: String,
         default: null
     },
@@ -17,10 +29,7 @@ const job_enquiry_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    about: {
-        type: String,
-        default: null
-    }
+
 }, {
     timestamps: true
 })

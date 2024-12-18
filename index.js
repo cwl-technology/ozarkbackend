@@ -22,8 +22,9 @@ const home_router = require("./router/home_router");
 const vision_value_router = require("./router/vision_value_router");
 const social_responsibility_router = require("./router/social_responsiblity_router");
 const career_router = require("./router/career_router");
-const case_study_category_router = require("./router/case_study_category_router");
 const contact_router = require("./router/contact_router");
+const case_study_router = require("./router/case_study_router");
+const our_expertise_router = require("./router/our_expertise_router");
 
 app.use(cors());
 app.use(express.json());
@@ -45,13 +46,14 @@ app.use("/api/home", home_router);
 app.use("/api/vision_and_value", vision_value_router);
 app.use("/api/social_responsibility", social_responsibility_router);
 app.use("/api/career", career_router);
-app.use("/api/case_study_category", case_study_category_router);
 app.use("/api/contact_enquiry", contact_router);
-
+app.use("/api/case_study", case_study_router)
+app.use("/api/our_expertise", our_expertise_router)
 
 app.get("/", (req, res) => {
     res.send("Hello ozark :)");
 })
+
 app.listen(PORT, () => {
     console.log(`server is running on the port: ${PORT}`)
 })

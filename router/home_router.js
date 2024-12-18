@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { updateHomePageData, getHomePageData, HomePageAPI } = require("../controller/home_controller");
+const { updateHomePageData, getHomePageData, HomePageAPI, adminHomePageApi } = require("../controller/home_controller");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -25,5 +25,6 @@ router.post("/update_home_page_data", upload.fields([
 
 router.get("/get_home_page_data", getHomePageData);
 router.get("/home_page_api",HomePageAPI);
+router.get("/admin_home_page_api",adminHomePageApi);
 
 module.exports = router;

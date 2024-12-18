@@ -35,12 +35,7 @@ const updateStory = async (req, res) => {
         if (image && data.image) {
             fs.unlinkSync(`./uploads/${data.image}`);
         }
-        // if (image2 && data.image2) {
-        //     fs.unlinkSync(`./uploads/${data.image2}`);
-        // }
-        // if (image3 && data.image3) {
-        //     fs.unlinkSync(`./uploads/${data.image3}`);
-        // }
+     
         if (icon1 && data.icon1) {
             fs.unlinkSync(`./uploads/${data.icon1}`);
         }

@@ -13,6 +13,10 @@ const blog_schema = new mongoose.Schema({
         type: String,
         default: null
     },
+    content: {
+        type: String,
+        default: null
+    },
     slug: {
         type: String,
         default: null

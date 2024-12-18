@@ -27,7 +27,8 @@ router.post("/update_life_ozark", upload.fields([
     { name: 'image10', maxCount: 1 },
     { name: 'image11', maxCount: 1 },
     { name: 'image12', maxCount: 1 },
-    { name: 'breadcrumb_image', maxCount: 1 },
+    { name: 'image13', maxCount: 1 },
+    // { name: 'breadcrumb_image', maxCount: 1 },
 
 ]), updateLife);
 router.get("/get_life_ozark_data", getLifeData);

@@ -5,18 +5,18 @@ const BASE_URL = process.env.BASE_URL;
 
 const updateLife = async (req, res) => {
     try {
-        const { description1, description2, meta_description, subheading1, subheading2, subheading3, subheading4, content1, content2, content3, content4, id, title, keyword } = req.body;
+        const { description1, description2, meta_description, subheading1, subheading2, subheading3, content1, content2, content3, id, title, keyword } = req.body;
 
         const currentData = await life_model.findOne({ _id: id });
         let updatedImage = {};
-        const imageFields = ["breadcrumb_image", "image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9", "image10", "image11", "image12"]
+        const imageFields = ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9", "image10", "image11", "image12","image13"]
 
         imageFields.forEach((image) =>
             updatedImage[image] = req.files?.[image]?.[0]?.filename || currentData[image]
         )
 
 
-        const data = await life_model.findByIdAndUpdate({ _id: id }, { description1, description2, meta_description, subheading1, subheading2, subheading3, subheading4, content1, content2, content3, content4, title, keyword, ...updatedImage });
+        const data = await life_model.findByIdAndUpdate({ _id: id }, { description1, description2, meta_description, subheading1, subheading2, subheading3, content1, content2, content3, title, keyword, ...updatedImage });
 
         imageFields.forEach(image => {
             if (req.files?.[image] && currentData[image]) {
@@ -37,7 +37,7 @@ const getLifeData = async (req, res) => {
     try {
         const data = await life_model.findOne({})
 
-        data.breadcrumb_image = `${BASE_URL}/uploads/${data.breadcrumb_image}`;
+        // data.breadcrumb_image = `${BASE_URL}/uploads/${data.breadcrumb_image}`;
         data.image1 = `${BASE_URL}/uploads/${data.image1}`
         data.image2 = `${BASE_URL}/uploads/${data.image2}`
         data.image3 = `${BASE_URL}/uploads/${data.image3}`
@@ -50,6 +50,7 @@ const getLifeData = async (req, res) => {
         data.image10 = `${BASE_URL}/uploads/${data.image10}`
         data.image11 = `${BASE_URL}/uploads/${data.image11}`
         data.image12 = `${BASE_URL}/uploads/${data.image12}`
+        data.image13 = `${BASE_URL}/uploads/${data.image13}`
 
         res.json({ message: "get ozark life data", status: 1, data: data });
     } catch (err) {
