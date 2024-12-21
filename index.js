@@ -25,6 +25,7 @@ const career_router = require("./router/career_router");
 const contact_router = require("./router/contact_router");
 const case_study_router = require("./router/case_study_router");
 const our_expertise_router = require("./router/our_expertise_router");
+const page_title_router = require("./router/page_title_router");
 
 app.use(cors());
 app.use(express.json());
@@ -49,6 +50,7 @@ app.use("/api/career", career_router);
 app.use("/api/contact_enquiry", contact_router);
 app.use("/api/case_study", case_study_router)
 app.use("/api/our_expertise", our_expertise_router)
+app.use("/api/page_title_data",page_title_router);
 
 app.get("/", (req, res) => {
     res.send("Hello ozark :)");

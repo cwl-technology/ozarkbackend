@@ -13,10 +13,6 @@ const career_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    icon1: {
-        type: String,
-        default: null
-    },
     subheading2: {
         type: String,
         default: null
@@ -29,10 +25,6 @@ const career_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    icon2: {
-        type: String,
-        default: null
-    },
     subheading3: {
         type: String,
         default: null
@@ -42,10 +34,6 @@ const career_schema = new mongoose.Schema({
         default: null
     },
     hover_content3: {
-        type: String,
-        default: null
-    },
-    icon3: {
         type: String,
         default: null
     },

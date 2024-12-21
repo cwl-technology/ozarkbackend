@@ -18,13 +18,13 @@ const updateOurExpertise = async (req, res) => {
         }
 
 
-        if (req.files?.benefits_image && data?.benefits_image) {
+        if (req.files?.benefits_image && data?.benefits_image && benefits_image != data?.benefits_image) {
             fs.unlinkSync(`./uploads/${data?.benefits_image}`);
         }
-        if (req.files?.advice_image && data?.advice_image) {
+        if (req.files?.advice_image && data?.advice_image && advice_image != data?.advice_image) {
             fs.unlinkSync(`./uploads/${data?.advice_image}`);
         }
-        if (req.files?.audit_image && data?.audit_image) {
+        if (req.files?.audit_image && data?.audit_image && audit_image != data?.audit_image) {
             fs.unlinkSync(`./uploads/${data?.audit_image}`);
         }
 

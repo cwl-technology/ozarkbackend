@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const social_responsibility_schema = new mongoose.Schema({
-    breadcrumb_image: {
+    heading1: {
         type: String,
         default: null
     },
@@ -9,95 +9,7 @@ const social_responsibility_schema = new mongoose.Schema({
         type: String,
         default: null
     },
-    description2: {
-        type: String,
-        default: null
-    },
-    heading1: {
-        type: String,
-        default: null
-    },
-    heading2: {
-        type: String,
-        default: null
-    },
-    subheading1: {
-        type: String,
-        default: null
-    },
-    subheading2: {
-        type: String,
-        default: null
-    },
-    subheading3: {
-        type: String,
-        default: null
-    },
-    subheading4: {
-        type: String,
-        default: null
-    },
-    subheading5: {
-        type: String,
-        default: null
-    },
-    subheading6: {
-        type: String,
-        default: null
-    },
-    content1: {
-        type: String,
-        default: null
-    },
-    content2: {
-        type: String,
-        default: null
-    },
-    content3: {
-        type: String,
-        default: null
-    },
-    content4: {
-        type: String,
-        default: null
-    },
-    content5: {
-        type: String,
-        default: null
-    },
-    content6: {
-        type: String,
-        default: null
-    },
     image1: {
-        type: String,
-        default: null
-    },
-    image2: {
-        type: String,
-        default: null
-    },
-    icon1: {
-        type: String,
-        default: null
-    },
-    icon2: {
-        type: String,
-        default: null
-    },
-    icon3: {
-        type: String,
-        default: null
-    },
-    icon4: {
-        type: String,
-        default: null
-    },
-    icon5: {
-        type: String,
-        default: null
-    },
-    icon6: {
         type: String,
         default: null
     },

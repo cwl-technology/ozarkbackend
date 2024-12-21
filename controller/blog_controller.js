@@ -53,14 +53,13 @@ const updateBlog = async (req, res) => {
     try {
         const { solution_id, heading, slug, content, blog_date, description1, description2, title, keyword, meta_description, id } = req.body;
 
-        const image1 = req.files ? req.files.image1 ? req.files.image1[0].filename : null : null
-        const image2 = req.files ? req.files.image2 ? req.files.image2[0].filename : null : null
-        const image3 = req.files ? req.files.image3 ? req.files.image3[0].filename : null : null
-        const main_image = req.files ? req.files.main_image ? req.files.main_image[0].filename : null : null
+        const currentData = await blog_model.findOne({ _id: id });
 
+        const image1 = req.files?.image1?.[0]?.filename || currentData?.image1
+        const image2 = req.files?.image2?.[0]?.filename || currentData?.image2
+        const image3 = req.files?.image3?.[0]?.filename || currentData?.image3
+        const main_image = req.files?.main_image?.[0]?.filename || currentData?.main_image
 
-
-        const currentData = await blog_model.findOne({ slug: slug });
         if (!solution_id || !heading || !slug) {
             [image1, image2, image3, main_image].forEach((image) => {
                 if (image) {
@@ -92,10 +91,10 @@ const updateBlog = async (req, res) => {
 
         const data = await blog_model.findByIdAndUpdate({ _id: id }, {
             solution_id, heading, content, slug, blog_date, description1, description2, title, keyword, meta_description,
-            image1: image1 ? image1 : currentData.image1,
-            image2: image2 ? image2 : currentData.image2,
-            image3: image3 ? image3 : currentData.image3,
-            main_image: main_image ? main_image : currentData.main_image
+            image1,
+            image2,
+            image3,
+            main_image
         });
 
         if (!data) {
@@ -107,18 +106,12 @@ const updateBlog = async (req, res) => {
             return res.json({ message: "Unable to update blog", status: 0 });
         }
 
-        if (image1 && data.image1) {
-            fs.unlinkSync(`./uploads/${data.image1}`)
-        }
-        if (image2 && data.image2) {
-            fs.unlinkSync(`./uploads/${data.image2}`)
-        }
-        if (image3 && data.image3) {
-            fs.unlinkSync(`./uploads/${data.image3}`);
-        }
-        if (main_image && data.main_image) {
-            fs.unlinkSync(`./uploads/${data.main_image}`);
-        }
+        ["image1", "image2", "image3", "main_image"].forEach((image) => {
+            const updatedImage = req.files?.[image]?.[0].filename
+            if (updatedImage && currentData[image] && updatedImage != currentData[image]) {
+                fs.unlinkSync(`./uploads/${currentData[image]}`)
+            }
+        })
 
         res.json({ message: "Blog updated successfully", status: 1 });
     } catch (err) {
@@ -136,7 +129,6 @@ const deleteBlog = async (req, res) => {
         }
 
         [data.image1, data.image2, data.image3, data.main_image].forEach((image) => {
-            console.log(image);
             if (image) {
                 fs.unlinkSync(`./uploads/${image}`);
             }
@@ -209,7 +201,7 @@ const getBlogBySlug = async (req, res) => {
         const { slug } = req.body;
         let data = await blog_model.findOne({ status: 1, slug });
         if (!data) {
-            res.json({ message: "Unable to get Blog data", status: 0 });
+            return res.json({ message: "Unable to get Blog data", status: 0 });
         }
         data.main_image = `${BASE_URL}/uploads/${data.main_image}`
         data.image1 = `${BASE_URL}/uploads/${data.image1}`

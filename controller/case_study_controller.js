@@ -43,7 +43,6 @@ const updateCaseStudy = async (req, res) => {
     try {
         const { solution_id, heading, slug, description, title, keyword, meta_description, id } = req.body;
 
-        const currentData = await case_study_model.findOne({ _id: id });
 
         const image = req.file ? req.file.filename : case_study_model?.image
 
@@ -76,7 +75,7 @@ const updateCaseStudy = async (req, res) => {
             }
             return res.json({ message: "Unable to update case study", status: 0 });
         }
-        if (image && data.image) {
+        if (req.file && data.image && data.image !== req.file?.filename) {
             fs.unlinkSync(`./uploads/${data.image}`);
         }
         res.json({ message: "Casestudy updated successfully", status: 1 });
@@ -93,6 +92,9 @@ const deleteCaseStudy = async (req, res) => {
         const data = await case_study_model.findByIdAndDelete({ _id: id });
         if (!data) {
             return res.json({ message: "Unable to delete case study data", status: 0 })
+        }
+        if (req.file) {
+            fs.unlinkSync(`./uploads${req.file.filname}`)
         }
         res.json({ message: "deleted successfully", status: 1 });
     } catch (err) {

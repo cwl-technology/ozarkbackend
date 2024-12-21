@@ -13,23 +13,27 @@ const updateVisionAndValues = async (req, res) => {
         const image2 = req.files?.image2?.[0].filename || currentData.image2;
         const image3 = req.files?.image3?.[0].filename || currentData.image3;
         const image4 = req.files?.image4?.[0].filename || currentData.image4;
-   
 
-        const data = await vision_value_model.findByIdAndUpdate({ _id: id }, { main_heading, main_content, subheading1, subheading2, subheading3, content1, content2, main_description, title, keyword, meta_description, description1,image1, image2, image3, image4,  })
 
-        if (req.files?.image1 && data?.image1) {
-            fs.unlinkSync(`./uploads/${data?.image1}`)
+        const data = await vision_value_model.findByIdAndUpdate({ _id: id }, { main_heading, main_content, subheading1, subheading2, subheading3, content1, content2, main_description, title, keyword, meta_description, description1, image1, image2, image3, image4, })
+
+        if (!data) {
+            [image1, image2, image3, image4].forEach((image) => {
+                if (image) {
+                    fs.unlinkSync(`./uploads/${image}`);
+                }
+            })
+            return res.json({ message: "Unablt to update vision & value ", status: 0 });
         }
-        if (req.files?.image2 && data?.image2) {
-            fs.unlinkSync(`./uploads/${data?.image2}`)
-        }
-        if (req.files?.image3 && data?.image3) {
-            fs.unlinkSync(`./uploads/${data?.image3}`)
-        }
-        if (req.files?.image4 && data?.image4) {
-            fs.unlinkSync(`./uploads/${data?.image4}`)
-        }
-      
+
+        ["image1", "image2", "image3", "image4"].forEach((image) => {
+            const updatedImage = req.files?.[image]?.[0].filename
+            if (updatedImage && currentData[image] && currentData[image] !== updatedImage) {
+                fs.unlinkSync(`./uploads/${currentData[image]}`)
+            }
+        })
+       
+        
         res.json({ message: "Updated successfully", status: 1 });
     } catch (err) {
         console.log(err);
@@ -41,7 +45,7 @@ const getVisionAndValueData = async (req, res) => {
     try {
         const data = await vision_value_model.findOne({});
 
-     
+
         data.image1 = `${BASE_URL}/uploads/${data.image1}`
         data.image2 = `${BASE_URL}/uploads/${data.image2}`
         data.image3 = `${BASE_URL}/uploads/${data.image3}`

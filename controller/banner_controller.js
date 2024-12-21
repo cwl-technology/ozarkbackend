@@ -7,8 +7,6 @@ const createBanner = async (req, res) => {
         const { heading, title, content } = req.body;
         const image = req.file ? req.file.filename : ""
 
-        console.log(req.body);
-        console.log(req.file);
         if (!heading || !title || !content || !image) {
             if (req.file) {
                 fs.unlinkSync(`./uploads/${req.file.filename}`);
@@ -17,6 +15,7 @@ const createBanner = async (req, res) => {
         }
 
         const data = new banner_model({ heading, title, content, image })
+
         await data.save();
         res.json({ message: "Banner created", status: 1 });
     } catch (err) {
@@ -29,9 +28,12 @@ const updateBanner = async (req, res) => {
     try {
         const { heading, title, content, id } = req.body;
         const currentData = await banner_model.findOne({ _id: id });
-        const image = req.file ? req.file.filename : currentData?.image
+        const image = req.file?.filename || currentData?.image
 
         if (!heading || !title || !content || !image) {
+            if (req.file) {
+                fs.unlinkSync(`./uploads/${req.file.filename}`);
+            }
             return res.json({ message: "Please fill all the fields", status: 0 });
         }
 
@@ -43,8 +45,8 @@ const updateBanner = async (req, res) => {
             return res.json({ message: "Unable to update banner data", status: 0 })
         }
 
-        if (image && image != data.image) {
-            fs.unlinkSync(`./uploads/${data.image}`);
+        if (req.file && currentData.image != image) {
+            fs.unlinkSync(`./uploads/${currentData.image}`);
         }
         res.json({ message: "Banner updated successfully", status: 1 });
     } catch (err) {

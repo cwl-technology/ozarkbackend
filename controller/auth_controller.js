@@ -4,7 +4,6 @@ const admin_model = require("../model/admin_model");
 const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(req.body);
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!email || !password) {

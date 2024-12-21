@@ -47,7 +47,7 @@ const updateTestimonials = async (req, res) => {
             return res.json({ message: "Unable to update testimonials", status: 0 });
         }
 
-        if (image && image != currentTestimonial.image) {
+        if (req.file && currentTestimonial.image && image != currentTestimonial.image) {
             fs.unlinkSync(`./uploads/${currentTestimonial.image}`);
         }
 

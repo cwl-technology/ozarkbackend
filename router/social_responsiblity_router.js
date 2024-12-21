@@ -17,14 +17,6 @@ const upload = multer({ storage: storage })
 
 router.post("/update_social_responsibility", upload.fields([
     { name: 'image1', maxCount: 1 },
-    { name: 'image2', maxCount: 1 },
-    { name: 'icon1', maxCount: 1 },
-    { name: 'icon2', maxCount: 1 },
-    { name: 'icon3', maxCount: 1 },
-    { name: 'icon4', maxCount: 1 },
-    { name: 'icon5', maxCount: 1 },
-    { name: 'icon6', maxCount: 1 },
-    { name: 'breadcrumb_image', maxCount: 1 },
     { name: 'gallery1', maxCount: 1 },
     { name: 'gallery2', maxCount: 1 },
     { name: 'gallery3', maxCount: 1 },

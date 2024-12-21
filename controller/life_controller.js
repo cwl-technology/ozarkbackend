@@ -9,17 +9,17 @@ const updateLife = async (req, res) => {
 
         const currentData = await life_model.findOne({ _id: id });
         let updatedImage = {};
-        const imageFields = ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9", "image10", "image11", "image12","image13"]
+
+        const imageFields = ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9", "image10", "image11", "image12", "image13"]
 
         imageFields.forEach((image) =>
             updatedImage[image] = req.files?.[image]?.[0]?.filename || currentData[image]
         )
 
-
         const data = await life_model.findByIdAndUpdate({ _id: id }, { description1, description2, meta_description, subheading1, subheading2, subheading3, content1, content2, content3, title, keyword, ...updatedImage });
 
         imageFields.forEach(image => {
-            if (req.files?.[image] && currentData[image]) {
+            if (req.files?.[image] && updatedImage[image] != currentData[image] && currentData[image]) {
                 fs.unlinkSync(`./uploads/${currentData[image]}`);
             }
         });

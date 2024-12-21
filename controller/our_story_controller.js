@@ -7,9 +7,7 @@ const updateStory = async (req, res) => {
         const { heading, description, subheading1, content1, subheading2, content2, subheading3, content3, subheading4, content4, title, keyword, meta_description, id } = req.body;
 
 
-        const currentData = await ourstory_model.find({ _id: id });
-
-        
+        const currentData = await ourstory_model.findOne({ _id: id });
 
         const image = req.files ? req.files.image ? req.files.image[0].filename : null : null
         // const image2 = req.files ? req.files.image2 ? req.files.image2[0].filename : null : null
@@ -20,8 +18,6 @@ const updateStory = async (req, res) => {
         const icon4 = req.files ? req.files.icon4 ? req.files.icon4[0].filename : null : null
 
         const data = await ourstory_model.findByIdAndUpdate({ _id: id }, { heading, description, subheading1, content1, subheading2, content2, subheading3, content3, subheading4, content4, title, keyword, meta_description, image: image ? image : currentData.image, icon1: icon1 ? icon1 : currentData.icon1, icon2: icon2 ? icon2 : currentData.icon2, icon3: icon3 ? icon3 : currentData.icon3, icon4: icon4 ? icon4 : currentData.icon4 })
-     
-      
 
         if (!data) {
             [image, icon1, icon2, icon3, icon4].forEach((image) => {
@@ -32,22 +28,14 @@ const updateStory = async (req, res) => {
             return res.json({ message: "Unable to update our story", status: 0 });
         }
 
-        if (image && data.image) {
-            fs.unlinkSync(`./uploads/${data.image}`);
-        }
-     
-        if (icon1 && data.icon1) {
-            fs.unlinkSync(`./uploads/${data.icon1}`);
-        }
-        if (icon2 && data.icon2) {
-            fs.unlinkSync(`./uploads/${data.icon2}`);
-        }
-        if (icon3 && data.icon3) {
-            fs.unlinkSync(`./uploads/${data.icon3}`);
-        }
-        if (icon4 && data.icon4) {
-            fs.unlinkSync(`./uploads/${data.icon4}`);
-        }
+        ["image", "icon1", "icon2", "icon3", "icon4"].forEach((image) => {
+            const updatedImage = req.files?.[image]?.[0].filename
+    
+            if (updatedImage && currentData[image] && updatedImage != currentData[image]) {
+                fs.unlinkSync(`./uploads/${currentData[image]}`);
+            }
+        })
+
         res.json({ message: "Our story updated successfully", status: 1 });
     } catch (err) {
         console.log(err);
