@@ -1,5 +1,8 @@
 const job_enquiry_model = require("../model/job_enquiry_model");
 const job_model = require("../model/job_model");
+const SMTP_PASS = process.env.SMTP_PASS
+const SMTP_USER = process.env.SMTP_USER
+const nodemailer = require("nodemailer");
 
 const createJob = async (req, res) => {
     try {
@@ -117,8 +120,63 @@ const postJobEnquiryData = async (req, res) => {
             return res.json({ message: "Please fill the requied fields", status: 0 });
         }
 
+
         const data = new job_enquiry_model({ name, email, phone, position, experience, notice_period, resume });
         await data.save();
+
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: SMTP_USER,
+                pass: SMTP_PASS
+            }
+        });
+
+        const info = await transporter.sendMail({
+            from: email,
+            to: "abhisheksharma0573@gmail.com",
+            subject: "Job Enquiry",
+            html: `
+            <h2>OZARK & CO.</h2>
+            <table border="1">
+                <tr>
+                    <th>Name</th>
+                    <td>${name}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>${email}</td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>${phone}</td>
+                </tr>
+                <tr>
+                    <th>Experience</th>
+                    <td>${experience || "Experience Unavailable"}</td>
+                </tr>
+                <tr>
+                    <th>Position</th>
+                    <td>${position}</td>
+                </tr>
+                <tr>
+                    <th>Notice Period</th>
+                    <td>${notice_period || "Notice Period Unavailable"}</td>
+                </tr>
+                
+            </table>
+            `,
+            attachments:[
+                {
+                    filename:`${name}_resume.pdf`,
+                    path:`./uploads/${resume}`,
+                    cid:"attachment_1"
+                }
+            ]
+        })
+
         res.json({ message: "Enquiry received", status: 1 });
     } catch (err) {
         console.log(err);
