@@ -31,6 +31,11 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
 
+app.get("/ozarkbackend",(req,res)=>{
+    res.send("hello ozark backend");
+})
+
+
 app.use("/api/auth/", admin_router);
 app.use("/api/solution", solution_router);
 app.use("/api/benefit", benefit_router);
