@@ -203,10 +203,10 @@ const getBlogBySlug = async (req, res) => {
         if (!data) {
             return res.json({ message: "Unable to get Blog data", status: 0 });
         }
-        data.main_image = `${BASE_URL}/uploads/${data.main_image}`
-        data.image1 = `${BASE_URL}/uploads/${data.image1}`
-        data.image2 = `${BASE_URL}/uploads/${data.image2}`
-        data.image3 = `${BASE_URL}/uploads/${data.image3}`
+        data.main_image = data.main_image ? `${BASE_URL}/uploads/${data.main_image}` : null
+        data.image1 = data.image1 ? `${BASE_URL}/uploads/${data.image1}` : null
+        data.image2 = data.image2 ? `${BASE_URL}/uploads/${data.image2}` : null
+        data.image3 = data.image3 ? `${BASE_URL}/uploads/${data.image3}` : null
         res.json({ message: "get bLog data", status: 1, data: data });
     } catch (err) {
         console.log(err);
